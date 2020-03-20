@@ -18,7 +18,7 @@ class IndigentSearch extends Indigent
     {
         return [
             [['id'], 'integer'],
-            [['first_name', 'middle_name', 'last_name', 'phone', 'address', 'support_type', 'support_regularity_type', 'support_days', 'verified'], 'safe'],
+            [['first_name', 'middle_name', 'last_name', 'phone', 'address', 'support_type', 'support_regularity_type', 'support_days', 'status'], 'safe'],
         ];
     }
 
@@ -69,7 +69,7 @@ class IndigentSearch extends Indigent
             ->andFilterWhere(['like', 'support_type', $this->support_type])
             ->andFilterWhere(['like', 'support_regularity_type', $this->support_regularity_type])
             ->andFilterWhere(['like', 'support_days', $this->support_days])
-            ->andFilterWhere(['like', 'verified', $this->verified]);
+            ->andFilterWhere(['like', 'status', $this->status]);
 
         return $dataProvider;
     }

@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'support_type',
             'support_regularity_type',
             'support_days',
-            'verified',
+            'status',
         ],
     ]) ?>
 

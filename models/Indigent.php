@@ -16,7 +16,7 @@ use Yii;
  * @property string $support_type
  * @property string|null $support_regularity_type
  * @property string|null $support_days
- * @property string|null $verified
+ * @property string|null $status
  *
  * @property Support[] $supports
  * @property SupportProduct[] $supportProducts
@@ -38,7 +38,7 @@ class Indigent extends \yii\db\ActiveRecord
     {
         return [
             [['first_name', 'middle_name', 'last_name', 'phone', 'address', 'support_type'], 'required'],
-            [['support_type', 'support_regularity_type', 'verified'], 'string'],
+            [['support_type', 'support_regularity_type', 'status'], 'string'],
             [['first_name', 'middle_name', 'last_name'], 'string', 'max' => 50],
             [['phone'], 'string', 'max' => 12],
             [['address'], 'string', 'max' => 255],
@@ -61,7 +61,7 @@ class Indigent extends \yii\db\ActiveRecord
             'support_type' => Yii::t('app', 'Support Type'),
             'support_regularity_type' => Yii::t('app', 'Support Regularity Type'),
             'support_days' => Yii::t('app', 'Support Days'),
-            'verified' => Yii::t('app', 'Verified'),
+            'status' => Yii::t('app', 'Status'),
         ];
     }
 

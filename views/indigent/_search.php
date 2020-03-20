@@ -36,7 +36,7 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'support_days') ?>
 
-    <?php // echo $form->field($model, 'verified') ?>
+    <?php // echo $form->field($model, 'status') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>

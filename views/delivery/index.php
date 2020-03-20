@@ -4,19 +4,19 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\IndigentSearch */
+/* @var $searchModel app\models\ApplicantSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Indigents');
+$this->title = Yii::t('app', 'Delivery');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="indigent-index">
+<div class="delivery-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+  <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Indigent'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+  <p>
+      <?= Html::a(Yii::t('app', 'Accept new one'), ['create'], ['class' => 'btn btn-success']) ?>
+  </p>
 
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -27,16 +27,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+//            'id',
             'first_name',
-            'middle_name',
-            'last_name',
+//            'middle_name',
+//            'last_name',
             'phone',
-            //'address',
-            //'support_type',
-            //'support_regularity_type',
-            //'support_days',
-            //'status',
+            'address',
+            'support_type',
+            'support_regularity_type',
+            'support_days',
+//            'status',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
