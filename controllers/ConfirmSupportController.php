@@ -2,18 +2,17 @@
 
 namespace app\controllers;
 
-use app\models\Support;
-use app\models\Supportings;
-use app\models\SupportingsSearch;
 use Yii;
+use app\models\Indigent;
+use app\models\ApplicantSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * SupportController implements the CRUD actions for Support model.
+ * ApplicantController implements the CRUD actions for Indigent model.
  */
-class SupportController extends Controller
+class ConfirmSupportController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -31,12 +30,12 @@ class SupportController extends Controller
     }
 
     /**
-     * Lists all Support models.
+     * Lists all Indigent models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new SupportingsSearch();
+        $searchModel = new ApplicantSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -46,8 +45,8 @@ class SupportController extends Controller
     }
 
     /**
-     * Displays a single Support model.
-     * @param string $id
+     * Displays a single Indigent model.
+     * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -59,66 +58,67 @@ class SupportController extends Controller
     }
 
     /**
-     * Creates a new Support model.
+     * Creates a new Indigent model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-//        $model = new Support();
-//
-//        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-//            return $this->redirect(['view', 'id' => $model->id]);
-//        }
-//
-//        return $this->render('create', [
-//            'model' => $model,
-//        ]);
+        $model = new Indigent();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
-     * Updates an existing Support model.
+     * Updates an existing Indigent model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id
+     * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)
     {
-//        $model = $this->findModel($id);
-//
-//        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-//            return $this->redirect(['view', 'id' => $model->id]);
-//        }
-//
-//        return $this->render('update', [
-//            'model' => $model,
-//        ]);
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     /**
-     * Deletes an existing Support model.
+     * Deletes an existing Indigent model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
+     * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
     {
-        Support::findOne($id)->delete();
+        $this->findModel($id)->delete();
+
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Support model based on its primary key value.
+     * Finds the Indigent model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
-     * @return Supportings the loaded model
+     * @param integer $id
+     * @return Indigent the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Supportings::find()->where(['=', 'id', $id])->one()) !== null) {
+        if (($model = Indigent::findOne($id)) !== null) {
             return $model;
         }
 

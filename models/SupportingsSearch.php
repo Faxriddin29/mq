@@ -1,15 +1,13 @@
 <?php
 
+
 namespace app\models;
 
-use app\models\Indigent;
+
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
-/**
- * ApplicantSearch represents the model behind the search form of `app\models\Indigent`.
- */
-class ApplicantSearch extends Indigent
+class SupportingsSearch extends Supportings
 {
     /**
      * {@inheritdoc}
@@ -17,8 +15,8 @@ class ApplicantSearch extends Indigent
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['first_name', 'middle_name', 'last_name', 'phone', 'address', 'support_type', 'support_regularity_type', 'support_days', 'status'], 'safe'],
+            [['id', 'support_id'], 'integer'],
+            [['first_name', 'middle_name', 'last_name', 'phone', 'address', 'support_type', 'support_regularity_type', 'status', 'date', 'created_at', 'support_days'], 'safe']
         ];
     }
 
@@ -40,7 +38,7 @@ class ApplicantSearch extends Indigent
      */
     public function search($params)
     {
-        $query = Indigent::find()->where(['not in', 'status', [Indigent::CONFIRMED, Indigent::DELIVERED, Indigent::ON_PROCESS]]);
+        $query = Supportings::find();
 
         // add conditions that should always apply here
 
@@ -59,17 +57,19 @@ class ApplicantSearch extends Indigent
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'support_id' => $this->support_id,
+            'date' => $this->date,
         ]);
 
         $query->andFilterWhere(['like', 'first_name', $this->first_name])
             ->andFilterWhere(['like', 'middle_name', $this->middle_name])
             ->andFilterWhere(['like', 'last_name', $this->last_name])
             ->andFilterWhere(['like', 'phone', $this->phone])
-            ->andFilterWhere(['like', 'address', $this->address])
+            ->andFilterWhere(['like', 'support_days', $this->support_days])
             ->andFilterWhere(['like', 'support_type', $this->support_type])
             ->andFilterWhere(['like', 'support_regularity_type', $this->support_regularity_type])
-            ->andFilterWhere(['like', 'support_days', $this->support_days])
-            ->andFilterWhere(['like', 'status', $this->status]);
+            ->andFilterWhere(['like', 'status', $this->status])
+            ->andFilterWhere(['like', 'address', $this->address]);
 
         return $dataProvider;
     }

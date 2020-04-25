@@ -23,6 +23,11 @@ use Yii;
  */
 class Indigent extends \yii\db\ActiveRecord
 {
+    const NOT_CONFIRMED = '0';
+    const ON_PROCESS = '1';
+    const DELIVERED = '2';
+    const REJECTED = '3';
+    const CONFIRMED = '4';
     /**
      * {@inheritdoc}
      */
@@ -83,5 +88,17 @@ class Indigent extends \yii\db\ActiveRecord
     public function getSupportProducts()
     {
         return $this->hasMany(SupportProduct::className(), ['indigent_id' => 'id']);
+    }
+
+    public static function status()
+    {
+        return [
+            '' => 'Tanlang',
+            self::NOT_CONFIRMED => 'Tasdiqlanmagan',
+            self::ON_PROCESS => 'Yuborish jarayonida',
+            self::DELIVERED => 'Yuborilgan',
+            self::REJECTED => 'Rad etilgan',
+            self::CONFIRMED => 'Tasdiqlangan',
+        ];
     }
 }

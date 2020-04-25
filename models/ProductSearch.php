@@ -18,6 +18,7 @@ class ProductSearch extends Product
     {
         return [
             [['id'], 'integer'],
+            [['amount'], 'double'],
             [['name_uz', 'name_ru', 'unit'], 'safe'],
         ];
     }
@@ -59,6 +60,7 @@ class ProductSearch extends Product
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'amount' => $this->amount,
         ]);
 
         $query->andFilterWhere(['like', 'name_uz', $this->name_uz])

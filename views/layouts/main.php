@@ -19,6 +19,7 @@ AppAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/toastr.min.css">
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
@@ -27,7 +28,7 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 
 <div class="wrap">
-    
+
 
     <div class="container-fluid">
         <div class="row">
@@ -44,8 +45,9 @@ AppAsset::register($this);
                     'options' => ['class' => 'nav-pills nav-stacked'],
                     'items' => [
                         ['label' => 'Applicants', 'url' => ['/applicant/index']],
-                        ['label' => 'Confirmation works', 'url' => ['/applicant/pending-confirmation']],
+                        ['label' => 'Confirmation works', 'url' => ['/support/index']],
                         ['label' => 'Delivery', 'url' => ['/delivery/index']],
+                        ['label' => 'Warehouse', 'url' => ['/product/index']],
                     ],
                 ]);
                 // NavBar::end();
@@ -71,6 +73,9 @@ AppAsset::register($this);
 </footer>
 
 <?php $this->endBody() ?>
+<script>
+    // toastr.options.timeOut = 1500;
+</script>
 </body>
 </html>
 <?php $this->endPage() ?>

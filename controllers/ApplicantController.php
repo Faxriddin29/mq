@@ -2,12 +2,15 @@
 
 namespace app\controllers;
 
+use app\models\Support;
 use Yii;
 use app\models\Indigent;
 use app\models\ApplicantSearch;
+use yii\base\DynamicModel;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * ApplicantController implements the CRUD actions for Indigent model.
@@ -21,7 +24,7 @@ class ApplicantController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -138,5 +141,77 @@ class ApplicantController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+    public function actionConfirmApplicants()
+    {
+        $request = Yii::$app->request->post();
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        // TODO: validate parameters
+        if ($request['rows'] && count($request['rows']) > 0) {
+            $connection = Yii::$app->db;
+            $transaction = $connection->beginTransaction();
+            $supports = Indigent::find()
+                ->where(['in', 'id', $request['rows']])
+                ->all();
+            if ($request['status'] === Indigent::CONFIRMED || $request['status'] === Indigent::ON_PROCESS || $request['status'] === Indigent::DELIVERED) {
+                try {
+                    $deniedUsers = [];
+                    foreach ($supports as $support) {
+                        if (!Support::find()->where('indigent_id', $support->id)->exists()) {
+                            $connection->createCommand()->insert('support', [
+                                'indigent_id' => $support->id,
+                                'date' => date('Y-m-d')
+                            ])->execute();
+                            $support->status = $request['status'];
+                            $support->save();
+                        } else {
+                            $deniedUsers[] = $support->id;
+                        }
+                    }
+
+                    $transaction->commit();
+                    $message = "Tranzaksiya amalga oshirildi!";
+                    $message .= count($deniedUsers) > 0 ?  " \nQuyidagi foydalanuvchilar support da mavjudligi sababli qaytarib yuborildi:\n$deniedUsers" : "";
+                    return [
+                        'code' => 200,
+                        'success' => true,
+                        'message' => $message
+                    ];
+                } catch (\Exception $exception) {
+                    $transaction->rollBack();
+                    return [
+                        'code' => 200,
+                        'success' => false,
+                        'message' => 'Tranzaksiyani amalga oshirib bo`lmadi!'
+                    ];
+                }
+            } else {
+                try {
+                    foreach ($supports as $support) {
+                        $support->status = $request['status'];
+                        $support->save();
+                    }
+
+                    $transaction->commit();
+                    return [
+                        'code' => 200,
+                        'success' => true,
+                        'message' => 'Holat o`zgartirildi!'
+                    ];
+                } catch (\Exception $exception) {
+                    $transaction->rollBack();
+                    return [
+                        'code' => 200,
+                        'success' => false,
+                        'message' => 'Holat o`zgartirib bo`lmadi!'
+                    ];
+                }
+            }
+        }
+        return [
+            'code' => 200,
+            'success' => false,
+            'message' => 'Ariza tanlanmagan!'
+        ];
     }
 }

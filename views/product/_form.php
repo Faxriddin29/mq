@@ -12,11 +12,17 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name_uz')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'name_ru')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'unit')->dropDownList([ 'kg' => 'Kg', 'liter' => 'Liter', 'pieces' => 'Pieces', 'meter' => 'Meter', ], ['prompt' => '']) ?>
+    <div class="row">
+        <div class="col-md-4">
+            <?= $form->field($model, 'name_uz')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-2">
+            <?= $form->field($model, 'amount')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-2">
+            <?= $form->field($model, 'unit')->dropDownList([ 'kg' => 'Kg', 'liter' => 'Liter', 'pieces' => 'Pieces', 'meter' => 'Meter', ], ['prompt' => '--tanlang--']) ?>
+        </div>
+    </div>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>

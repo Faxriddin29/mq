@@ -16,6 +16,8 @@ use Yii;
  */
 class Support extends \yii\db\ActiveRecord
 {
+    const SUPPORT_ONCE = 'once';
+    const SUPPORT_REGULAR = 'regular';
     /**
      * {@inheritdoc}
      */
@@ -31,7 +33,7 @@ class Support extends \yii\db\ActiveRecord
     {
         return [
             [['indigent_id', 'date'], 'required'],
-            [['indigent_id'], 'integer'],
+            [['indigent_id'], 'integer', 'unique'],
             [['date'], 'safe'],
             [['indigent_id'], 'exist', 'skipOnError' => true, 'targetClass' => Indigent::className(), 'targetAttribute' => ['indigent_id' => 'id']],
         ];
