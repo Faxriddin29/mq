@@ -58,15 +58,15 @@ class Indigent extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'first_name' => Yii::t('app', 'First Name'),
-            'middle_name' => Yii::t('app', 'Middle Name'),
-            'last_name' => Yii::t('app', 'Last Name'),
-            'phone' => Yii::t('app', 'Phone'),
-            'address' => Yii::t('app', 'Address'),
-            'support_type' => Yii::t('app', 'Support Type'),
-            'support_regularity_type' => Yii::t('app', 'Support Regularity Type'),
-            'support_days' => Yii::t('app', 'Support Days'),
-            'status' => Yii::t('app', 'Status'),
+            'first_name' => Yii::t('app', 'Ism'),
+            'middle_name' => Yii::t('app', 'Otasining ismi'),
+            'last_name' => Yii::t('app', 'Familiya'),
+            'phone' => Yii::t('app', 'Telefon raqami'),
+            'address' => Yii::t('app', 'Manzil'),
+            'support_type' => Yii::t('app', 'Taminlash turi'),
+            'support_regularity_type' => Yii::t('app', 'Ta`minlash davomiyligi turi'),
+            'support_days' => Yii::t('app', 'Ta`minlash kunlari'),
+            'status' => Yii::t('app', 'Holati'),
         ];
     }
 
@@ -77,7 +77,7 @@ class Indigent extends \yii\db\ActiveRecord
      */
     public function getSupports()
     {
-        return $this->hasMany(Support::className(), ['indigent_id' => 'id']);
+        return $this->hasMany(Support::class, ['indigent_id' => 'id']);
     }
 
     /**
@@ -87,7 +87,7 @@ class Indigent extends \yii\db\ActiveRecord
      */
     public function getSupportProducts()
     {
-        return $this->hasMany(SupportProduct::className(), ['indigent_id' => 'id']);
+        return $this->hasMany(SupportProduct::class, ['indigent_id' => 'id']);
     }
 
     public static function status()

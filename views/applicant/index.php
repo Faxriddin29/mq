@@ -8,7 +8,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\ApplicantSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Applicants');
+$this->title = Yii::t('app', 'Arizachilar');
 $this->params['breadcrumbs'][] = $this->title;
 
 $status = [
@@ -23,18 +23,17 @@ $status = [
 
     <div class="row">
         <div class="col-md-2">
-                <?= Html::a(Yii::t('app', 'Accept new one'), ['create'], ['class' => 'btn btn-success']) ?>
+                <?= Html::a(Yii::t('app', 'Yangi qo`shish'), ['create'], ['class' => 'btn btn-success']) ?>
         </div>
         <div class="col-md-2 col-md-offset-8">
             <?= Html::dropDownList('status-dropdown', 'id', $status, [
                 'class' => 'form-control',
                 'id' => 'status-select'
-            ]); ?>
+            ]) ?>
         </div>
     </div>
 
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -123,8 +122,5 @@ $(document).ready(function(){
             });
 JS;
 
-$this->registerJs(
-        $script,
-        \yii\web\View::POS_END
-)
+$this->registerJs($script, \yii\web\View::POS_END)
 ?>

@@ -9,7 +9,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\SupportSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Supports');
+$this->title = Yii::t('app', 'Mahsulot tanlash');
 $this->params['breadcrumbs'][] = $this->title;
 $this->registerCss("
     #supportModal .modal-dialog {width: 50%; }

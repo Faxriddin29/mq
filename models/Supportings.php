@@ -54,19 +54,19 @@ class Supportings extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'first_name' => Yii::t('app', 'First Name'),
-            'middle_name' => Yii::t('app', 'Middle Name'),
-            'last_name' => Yii::t('app', 'Last Name'),
-            'phone' => Yii::t('app', 'Phone'),
-            'address' => Yii::t('app', 'Address'),
-            'support_type' => Yii::t('app', 'Support Type'),
-            'support_regularity_type' => Yii::t('app', 'Support Regularity Type'),
-            'support_days' => Yii::t('app', 'Support Days'),
-            'status' => Yii::t('app', 'Status'),
-            'support_id' => Yii::t('app', 'Support ID'),
-            'date' => Yii::t('app', 'Date'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'app_status' => Yii::t('app', 'Application status'),
+            'first_name' => Yii::t('app', 'Ism'),
+            'middle_name' => Yii::t('app', 'Otasining ismi'),
+            'last_name' => Yii::t('app', 'Familiya'),
+            'phone' => Yii::t('app', 'Telefon raqami'),
+            'address' => Yii::t('app', 'Manzil'),
+            'support_type' => Yii::t('app', 'Ta`minot turi'),
+            'support_regularity_type' => Yii::t('app', 'Ta`minot davomiyligi turi'),
+            'support_days' => Yii::t('app', 'Ta`minot kunlari'),
+            'status' => Yii::t('app', 'Holat'),
+            'support_id' => Yii::t('app', 'Ta`minot yozuvi IDsi'),
+            'date' => Yii::t('app', 'Kun'),
+            'created_at' => Yii::t('app', 'Ariza berilgan kun'),
+            'app_status' => Yii::t('app', 'Akt holati'),
         ];
     }
 }

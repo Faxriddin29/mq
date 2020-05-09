@@ -28,29 +28,19 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 
 <div class="wrap">
-
-
-    <div class="container-fluid">
+    <div class="container-fluid" style="padding-top: 20px!important;">
         <div class="row">
             <div class="col-md-2">
                 <?php
-                // NavBar::begin([
-                //     'brandLabel' => Yii::$app->name,
-                //     'brandUrl' => Yii::$app->homeUrl,
-                //     'options' => [
-                //         'class' => 'navbar-inverse navbar-fixed-top',
-                //     ],
-                // ]);
                 echo Nav::widget([
                     'options' => ['class' => 'nav-pills nav-stacked'],
                     'items' => [
-                        ['label' => 'Arizachilarni qabul qilish', 'url' => ['/applicant/index']],
+                        ['label' => 'Arizachilarni qabul qilish', 'url' => ['/']],
                         ['label' => 'Tasdiqlanganlar', 'url' => ['/support/index']],
                         ['label' => 'Qabul qilganlarni tasdiqlash', 'url' => ['/delivery/index']],
                         ['label' => 'Ombor', 'url' => ['/product/index']],
                     ],
                 ]);
-                // NavBar::end();
                 ?>
             </div>
             <div class="col-md-10">
@@ -66,9 +56,9 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; Mehrli qo'llar <?= date('Y') ?></p>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-right"></p>
     </div>
 </footer>
 

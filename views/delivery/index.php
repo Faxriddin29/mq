@@ -9,7 +9,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\ApplicantSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Delivery');
+$this->title = Yii::t('app', 'Yetkazib berish');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="delivery-index">
@@ -21,7 +21,6 @@ $this->params['breadcrumbs'][] = $this->title;
   </p>
 
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

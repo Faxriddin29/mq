@@ -20,12 +20,12 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'amount')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-2">
-            <?= $form->field($model, 'unit')->dropDownList([ 'kg' => 'Kg', 'liter' => 'Liter', 'pieces' => 'Pieces', 'meter' => 'Meter', ], ['prompt' => '--tanlang--']) ?>
+            <?= $form->field($model, 'unit')->dropDownList([ 'kg' => 'Kg', 'liter' => 'Litr', 'pieces' => 'Dona', 'meter' => 'Metr', 'pocket' => 'Paket', 'bottle' => 'Baklashka', 'blok' => 'Blok'], ['prompt' => '--tanlang--']) ?>
         </div>
     </div>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Saqlash'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

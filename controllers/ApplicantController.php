@@ -6,7 +6,6 @@ use app\models\Support;
 use Yii;
 use app\models\Indigent;
 use app\models\ApplicantSearch;
-use yii\base\DynamicModel;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -119,6 +118,8 @@ class ApplicantController extends Controller
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {
@@ -152,7 +153,7 @@ class ApplicantController extends Controller
             $transaction = $connection->beginTransaction();
             $supports = Indigent::find()
                 ->where(['in', 'id', $request['rows']])
-                ->all();//return Support::find()->where(['=', 'indigent_id', $supports[0]->id])->exists();
+                ->all();
             if ($request['status'] === Indigent::CONFIRMED) {
                 try {
                     $deniedUsers = [];

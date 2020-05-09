@@ -44,9 +44,10 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name_uz' => Yii::t('app', 'Name Uz'),
+            'name_uz' => Yii::t('app', 'Nom'),
             'name_ru' => Yii::t('app', 'Name Ru'),
-            'unit' => Yii::t('app', 'Unit'),
+            'unit' => Yii::t('app', 'O`lchov'),
+            'amount' => Yii::t('app', 'Miqdori'),
         ];
     }
 
@@ -57,6 +58,6 @@ class Product extends \yii\db\ActiveRecord
      */
     public function getSupportProducts()
     {
-        return $this->hasMany(SupportProduct::className(), ['product_id' => 'id']);
+        return $this->hasMany(SupportProduct::class, ['product_id' => 'id']);
     }
 }

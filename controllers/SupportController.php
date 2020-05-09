@@ -73,7 +73,6 @@ class SupportController extends Controller
         $request = Yii::$app->request->post();
         $products = Product::find()->where(['>', 'amount', 0])->all();
         return Yii::$app->controller->renderAjax('_partial/_choose_product', ['products' => $products]);
-//        return $supports;
     }
 
     /**
@@ -81,7 +80,7 @@ class SupportController extends Controller
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     * @throws \Throwable
      */
     public function actionDelete($id)
     {
@@ -128,9 +127,12 @@ class SupportController extends Controller
             try {
                 $not_confirmed = [];
                 foreach ($request['rows'] as $row) {
+
                     $indigent = Indigent::findOne($row['indigent_id']);
                     if ($indigent->status === Indigent::CONFIRMED) {
+
                         foreach ($request['products'] as $product) {
+
                             $db->createCommand()->insert('support_product', [
                                 'support_id' => $row['support_id'],
                                 'indigent_id' => $row['indigent_id'],
@@ -138,7 +140,9 @@ class SupportController extends Controller
                                 'amount' => $product['amount'],
                                 'created_at' => date('Y-m-d H:i:s')
                             ])->execute();
+
                             $tempProduct = Product::findOne($product['id']);
+
                             if (!$tempProduct) {
                                 $transaction->rollBack();
                                 return [
@@ -146,14 +150,17 @@ class SupportController extends Controller
                                     'message' => "{$product['id']} IDli mahsulot topilmadi! Iltimos, tekshirib ko`ring."
                                 ];
                             }
+
                             $tempProduct->amount -= $product['amount'];
                             $tempProduct->save();
                         }
+
                         $db->createCommand()->update('indigent', [
                             'status' => Indigent::ON_PROCESS
                         ], "id=:id")
                             ->bindValue(':id', $row['indigent_id'])
                             ->execute();
+
                     } else {
                         $not_confirmed[] = $indigent->id;
                     }

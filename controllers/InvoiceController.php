@@ -5,39 +5,12 @@ namespace app\controllers;
 use app\models\Indigent;
 use app\models\Support;
 use app\models\SupportingsSearch;
-use app\models\SupportProduct;
-use DeepCopyTest\Matcher\Y;
 use Yii;
 use PhpOffice\PhpWord\TemplateProcessor;
-use yii\helpers\Html;
 use yii\web\Response;
 
 class InvoiceController extends \yii\web\Controller
 {
-    public function actionGenerate()
-    {
-//        \Yii::$app->response->format = 'pdf';
-//
-//        $supportings = Support::find()->all();
-//        Yii::$container->set(Yii::$app->response->formatters['pdf']['class'], [
-//            'format' => [210, 297], // Legal page size in mm
-//            'orientation' => 'Portrait', // This value will be used when 'format' is an array only. Skipped when 'format' is empty or is a string
-//        ]);
-//        $this->layout = '//print';
-//        return $this->renderPartial('index', [
-//            'supportings' => $supportings
-//        ]);
-    }
-
-    public function actionTest()
-    {
-//        $supportings = Support::find()->all();
-//
-//        return $this->render('test', [
-//            'supportings' => $supportings
-//        ]);
-    }
-
     public function actionInvoice()
     {
         $searchModel = new SupportingsSearch();
@@ -64,7 +37,6 @@ class InvoiceController extends \yii\web\Controller
             }
 
             $supportings = Support::find()->where(['=', 'app_status', Support::STATUS_NOT_GENERATED])->andWhere(['in', 'indigent_id', $ids])->all();
-
 
             if (count($supportings) > 0) {
                 $hasNotProducts = [];
@@ -112,7 +84,7 @@ class InvoiceController extends \yii\web\Controller
 
                         $path = Yii::getAlias('@app/web/docs/applications/') . date('d.m.Y');
                         if (!file_exists($path) && !mkdir($path, 0777) && !is_dir($path)) {
-                            throw new \RuntimeException(sprintf('Directory "%s" was not created', $path));
+                            throw new \RuntimeException(sprintf('"%s" papka yaratilmagan', $path));
                         }
 
                         $application->saveAs(Yii::getAlias('@app/web/docs/applications/') . date('d.m.Y') . '/'. $fio .'_'. $item->id . '_' . date('d-m-Y').'.docx');
@@ -127,7 +99,7 @@ class InvoiceController extends \yii\web\Controller
                     $transaction->commit();
                     return [
                         'success' => true,
-                        'message' => 'Акты были успешно созданы!',
+                        'message' => 'Ariza yaratilgan!',
                         'data' => $files
                     ];
                 } catch (\Exception $exception) {
@@ -147,7 +119,7 @@ class InvoiceController extends \yii\web\Controller
 
             return [
                 'success' => false,
-                'message' => 'Благополучатели не найдены'
+                'message' => 'Arizachi topilmadi'
             ];
         }
 

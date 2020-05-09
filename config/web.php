@@ -21,11 +21,12 @@ $config = [
                     'baseUrl'=>'@web/docs',
                     'basePath'=>'@webroot/docs',
                     'path' => 'applications',
-                    'name' => 'Global'
+                    'name' => 'Xotira'
                 ]
             ],
         ]
     ],
+    'defaultRoute' => 'applicant/index',
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation

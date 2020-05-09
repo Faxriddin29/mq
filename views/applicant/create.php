@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Indigent */
 
-$this->title = Yii::t('app', 'New Applicant');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Applicants'), 'url' => ['index']];
+$this->title = Yii::t('app', 'Yangi ariza');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Arizachilar'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="indigent-create">
