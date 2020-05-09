@@ -230,11 +230,11 @@ $(document).ready(function(){
                 },
                 success: function (res) {
                    if (res.success) {
-                       toastr.success(res.message)
+                       toastr.success(res.message);
+                       setTimeout(function () {window.location.reload();}, 2000);
                    } else {
                        toastr.error(res.message)
                    }
-                   setTimeout(function () {window.location.reload();}, 2000);
                 },
                 error: function (err) {
                     console.log(err);
@@ -244,6 +244,29 @@ $(document).ready(function(){
                 toastr.error('Mahsulot tanlanmagan yoki miqdori ko`rsatilmagan!');
             }
         });
+        
+        $(document).on('blur', '.product-qty', function() {
+          let amount = $(this).val();
+          let id = $(this).data('product');
+          let checkbox = $(this).parent().parent().find('.support-checkbox');
+          if (amount && checkbox.is(':checked')) {
+              $.ajax({
+                url: '/product/check',
+                type: 'post',
+                data: {id: id, amount: amount},
+                success: function(res) {
+                  if (!res.success) {
+                      toastr.error(res.message);
+                  }
+                },
+                error: function(err) {
+                  console.error(err);
+                }
+              });
+          } else {
+              toastr.error('Mahsulot tanlanmagan yoki miqdori ko`rsatilmagan')
+          }
+        })
         });
         
         // var modal = document.getElementById('support-modal-body');

@@ -8,6 +8,7 @@ use app\models\ProductSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -125,5 +126,45 @@ class ProductController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    public function actionCheck()
+    {
+        if (Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $request = Yii::$app->request->post();
+            if (!$request['id'] || !is_int((int) $request['id'])) {
+                return [
+                    'success' => false,
+                    'message' => 'Id topilmadi yoki butun son tipida emas!'
+                ];
+            }
+            if (!$request['amount'] || !is_int((int) $request['amount'])) {
+                return [
+                    'success' => false,
+                    'message' => 'Amount topilmadi yoki butun son tipida emas!'
+                ];
+            }
+
+            $product = Product::findOne($request['id']);
+            if (!$product) {
+                return [
+                    'success' => false,
+                    'message' => $request['id'] . ' idli mahsulot topilmadi!'
+                ];
+            }
+
+            if ($product->amount - $request['amount'] < 0) {
+                return [
+                    'success' => false,
+                    'message' => 'Omborda mahsulot miqdori yetarli emas! Iltimos, kiritmoqchi bo`lgan mahsulot miqdoringizni kamaytiring.'
+                ];
+            }
+
+            return [
+                'success' => true
+            ];
+        }
+        return 'Request is not Ajax';
     }
 }

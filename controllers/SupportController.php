@@ -151,6 +151,14 @@ class SupportController extends Controller
                                 ];
                             }
 
+                            if ($tempProduct->amount - $product['amount'] < 0 ) {
+                                $transaction->rollBack();
+                                return [
+                                    'success' => false,
+                                    'message' => $tempProduct->name_uz . ' mahsulotining miqdori omborda yetarli emas!'
+                                ];
+                            }
+
                             $tempProduct->amount -= $product['amount'];
                             $tempProduct->save();
                         }

@@ -35,9 +35,9 @@ AppAsset::register($this);
                 echo Nav::widget([
                     'options' => ['class' => 'nav-pills nav-stacked'],
                     'items' => [
-                        ['label' => 'Arizachilarni qabul qilish', 'url' => ['/']],
-                        ['label' => 'Tasdiqlanganlar', 'url' => ['/support/index']],
-                        ['label' => 'Qabul qilganlarni tasdiqlash', 'url' => ['/delivery/index']],
+                        ['label' => 'Ariza qabul qilish', 'url' => ['/']],
+                        ['label' => 'Mahsulot biriktirish', 'url' => ['/support/index']],
+                        ['label' => 'Yetkazilganligini tasdiqlash', 'url' => ['/delivery/index']],
                         ['label' => 'Ombor', 'url' => ['/product/index']],
                     ],
                 ]);
