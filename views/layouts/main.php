@@ -44,10 +44,10 @@ AppAsset::register($this);
                 echo Nav::widget([
                     'options' => ['class' => 'nav-pills nav-stacked'],
                     'items' => [
-                        ['label' => 'Applicants', 'url' => ['/applicant/index']],
-                        ['label' => 'Confirmation works', 'url' => ['/support/index']],
-                        ['label' => 'Delivery', 'url' => ['/delivery/index']],
-                        ['label' => 'Warehouse', 'url' => ['/product/index']],
+                        ['label' => 'Arizachilarni qabul qilish', 'url' => ['/applicant/index']],
+                        ['label' => 'Tasdiqlanganlar', 'url' => ['/support/index']],
+                        ['label' => 'Qabul qilganlarni tasdiqlash', 'url' => ['/delivery/index']],
+                        ['label' => 'Ombor', 'url' => ['/product/index']],
                     ],
                 ]);
                 // NavBar::end();

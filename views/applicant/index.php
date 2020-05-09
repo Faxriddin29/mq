@@ -11,7 +11,11 @@ use yii\widgets\Pjax;
 $this->title = Yii::t('app', 'Applicants');
 $this->params['breadcrumbs'][] = $this->title;
 
-$status = Indigent::status();
+$status = [
+        '' => 'Tanlang',
+        Indigent::CONFIRMED => 'Tasdiqlangan',
+        Indigent::REJECTED => 'Rad etilgan'
+];
 ?>
 <div class="indigent-index">
 
@@ -65,7 +69,10 @@ $status = Indigent::status();
                     }
                     return '---';
                 },
-                'filter' => $status,
+                'filter' => [
+                        Indigent::NOT_CONFIRMED => 'Tasdiqlanmagan',
+                        Indigent::REJECTED => 'Rad etilgan',
+                ],
                 'format' => 'raw'
             ],
             [
@@ -79,13 +86,12 @@ $status = Indigent::status();
     <?php Pjax::end(); ?>
 </div>
 <?php
-$this->registerJs(
-        "
-            $(document).ready(function(){
+$script = <<< JS
+$(document).ready(function(){
                 $('#status-select').on('change', function (e) {
                 let val = e.target.value;
-                let selected = $('#w0').yiiGridView('getSelectedRows');
-                var csrfToken = $('meta[name=\"csrf - token\"]').attr(\"content\");
+                let selected = $('#w0').yiiGridView('getSelectedRows');console.log(val, selected)
+                let csrfToken = $('meta[name="csrf - token"]').attr("content");
                 if (val) {
                 if (selected.length > 0) {
                     $.ajax({
@@ -110,12 +116,15 @@ $this->registerJs(
                         }
                     });
                 } else {
-                    alert('Ariza tanlanmagan! Iltimos, arizani tanlang')
+                    toastr.error('Ariza tanlanmagan! Iltimos, arizani tanlang')
                 }
                 }
             });
             });
-        ",
+JS;
+
+$this->registerJs(
+        $script,
         \yii\web\View::POS_END
 )
 ?>

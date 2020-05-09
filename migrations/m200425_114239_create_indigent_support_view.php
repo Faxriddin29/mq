@@ -25,6 +25,7 @@ class m200425_114239_create_indigent_support_view extends Migration
                 i.status,
                 s.id as support_id,
                 s.date,
+                s.app_status,
                 i.created_at
                 FROM support s
                 INNER JOIN indigent i ON s.indigent_id = i.id
@@ -36,8 +37,6 @@ WHERE i.status IN ('1','2','4'))");
      */
     public function safeDown()
     {
-        echo "m200425_114239_create_indigent_support_view cannot be reverted.\n";
-
         return $this->execute("DROP VIEW IF EXISTS supportings");
     }
 

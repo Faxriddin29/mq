@@ -152,17 +152,18 @@ class ApplicantController extends Controller
             $transaction = $connection->beginTransaction();
             $supports = Indigent::find()
                 ->where(['in', 'id', $request['rows']])
-                ->all();
-            if ($request['status'] === Indigent::CONFIRMED || $request['status'] === Indigent::ON_PROCESS || $request['status'] === Indigent::DELIVERED) {
+                ->all();//return Support::find()->where(['=', 'indigent_id', $supports[0]->id])->exists();
+            if ($request['status'] === Indigent::CONFIRMED) {
                 try {
                     $deniedUsers = [];
                     foreach ($supports as $support) {
-                        if (!Support::find()->where('indigent_id', $support->id)->exists()) {
+                        if (!Support::find()->where(['=', 'indigent_id', $support->id])->exists()) {
                             $connection->createCommand()->insert('support', [
                                 'indigent_id' => $support->id,
-                                'date' => date('Y-m-d')
+                                'date' => date('Y-m-d'),
+                                'app_status' => Support::STATUS_NOT_GENERATED
                             ])->execute();
-                            $support->status = $request['status'];
+                            $support->status = Indigent::CONFIRMED;
                             $support->save();
                         } else {
                             $deniedUsers[] = $support->id;
@@ -170,8 +171,8 @@ class ApplicantController extends Controller
                     }
 
                     $transaction->commit();
-                    $message = "Tranzaksiya amalga oshirildi!";
-                    $message .= count($deniedUsers) > 0 ?  " \nQuyidagi foydalanuvchilar support da mavjudligi sababli qaytarib yuborildi:\n$deniedUsers" : "";
+                    $message = "Arizachi(lar) mahsulot yuboriluvchilar ro`yxatiga qo`shildi!";
+                    $message .= count($deniedUsers) > 0 ?  " \nQuyidagi foydalanuvchilar support da mavjudligi sababli qaytarib yuborildi:\n" . implode(', ', $deniedUsers) : "";
                     return [
                         'code' => 200,
                         'success' => true,
@@ -182,13 +183,13 @@ class ApplicantController extends Controller
                     return [
                         'code' => 200,
                         'success' => false,
-                        'message' => 'Tranzaksiyani amalga oshirib bo`lmadi!'
+                        'message' => 'Arizachi(lar)ni ro`yxatga qo`shib bo`lmadi! Sabab: ' . $exception->getMessage()
                     ];
                 }
-            } else {
+            } else if ($request['status'] === Indigent::REJECTED) {
                 try {
                     foreach ($supports as $support) {
-                        $support->status = $request['status'];
+                        $support->status = Indigent::REJECTED;
                         $support->save();
                     }
 
@@ -196,14 +197,14 @@ class ApplicantController extends Controller
                     return [
                         'code' => 200,
                         'success' => true,
-                        'message' => 'Holat o`zgartirildi!'
+                        'message' => 'Arizachi(lar) arizasi rad etildi!'
                     ];
                 } catch (\Exception $exception) {
                     $transaction->rollBack();
                     return [
                         'code' => 200,
                         'success' => false,
-                        'message' => 'Holat o`zgartirib bo`lmadi!'
+                        'message' => 'Rad etishda xatolik! Sabab: ' . $exception->getMessage()
                     ];
                 }
             }

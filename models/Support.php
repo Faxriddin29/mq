@@ -18,6 +18,12 @@ class Support extends \yii\db\ActiveRecord
 {
     const SUPPORT_ONCE = 'once';
     const SUPPORT_REGULAR = 'regular';
+
+    /**
+     * Invoice status
+     */
+    const STATUS_NOT_GENERATED = '0';
+    const STATUS_GENERATED = '1';
     /**
      * {@inheritdoc}
      */
@@ -34,8 +40,9 @@ class Support extends \yii\db\ActiveRecord
         return [
             [['indigent_id', 'date'], 'required'],
             [['indigent_id'], 'integer', 'unique'],
+            [['app_status', 'string']],
             [['date'], 'safe'],
-            [['indigent_id'], 'exist', 'skipOnError' => true, 'targetClass' => Indigent::className(), 'targetAttribute' => ['indigent_id' => 'id']],
+            [['indigent_id'], 'exist', 'skipOnError' => true, 'targetClass' => Indigent::class, 'targetAttribute' => ['indigent_id' => 'id']],
         ];
     }
 
@@ -48,6 +55,7 @@ class Support extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'indigent_id' => Yii::t('app', 'Indigent ID'),
             'date' => Yii::t('app', 'Date'),
+            'app_status' => Yii::t('app', 'Application status')
         ];
     }
 
@@ -58,7 +66,7 @@ class Support extends \yii\db\ActiveRecord
      */
     public function getIndigent()
     {
-        return $this->hasOne(Indigent::className(), ['id' => 'indigent_id']);
+        return $this->hasOne(Indigent::class, ['id' => 'indigent_id']);
     }
 
     /**
@@ -68,6 +76,6 @@ class Support extends \yii\db\ActiveRecord
      */
     public function getSupportProducts()
     {
-        return $this->hasMany(SupportProduct::className(), ['support_id' => 'id']);
+        return $this->hasMany(SupportProduct::class, ['support_id' => 'id']);
     }
 }

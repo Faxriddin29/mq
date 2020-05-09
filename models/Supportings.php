@@ -39,7 +39,7 @@ class Supportings extends \yii\db\ActiveRecord
         return [
             [['id', 'support_id'], 'integer'],
             [['first_name', 'middle_name', 'last_name', 'phone', 'address', 'support_type', 'support_regularity_type', 'status'], 'required'],
-            [['support_type', 'support_regularity_type', 'status'], 'string'],
+            [['support_type', 'support_regularity_type', 'status', 'app_status'], 'string'],
             [['date', 'created_at'], 'safe'],
             [['first_name', 'middle_name', 'last_name'], 'string', 'max' => 50],
             [['phone'], 'string', 'max' => 12],
@@ -66,6 +66,7 @@ class Supportings extends \yii\db\ActiveRecord
             'support_id' => Yii::t('app', 'Support ID'),
             'date' => Yii::t('app', 'Date'),
             'created_at' => Yii::t('app', 'Created At'),
+            'app_status' => Yii::t('app', 'Application status'),
         ];
     }
 }

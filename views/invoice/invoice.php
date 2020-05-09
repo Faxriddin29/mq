@@ -9,16 +9,17 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\ApplicantSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Delivery');
+$this->title = Yii::t('app', 'Akt yaratish');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="delivery-index">
 
-  <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($this->title) ?></h1>
 
-  <p>
-      <button id="delivered" class="btn btn-primary">Yetkazildi</button>
-  </p>
+    <p>
+        <button id="generate_invoice" class="btn btn-primary">Akt yaratish</button>
+        <?= Html::a(Yii::t('app', 'Aktni ko`rish'), ['/invoice/invoices'], ['class' => 'btn btn-success']) ?>
+    </p>
 
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -84,7 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => static function ($model) {
                     $status = $model->app_status;
                     return $status === '1' ? '<div class="status-box" data-id="0"><span class="text-info indigent-status">Yaratilgan</span></div>' :
-                        '<div class="status-box" data-id="1"><span class="text-warning indigent-status">Yaratilmagan</span></div>';
+                                            '<div class="status-box" data-id="1"><span class="text-warning indigent-status">Yaratilmagan</span></div>';
                 },
                 'filter' => [
                     Support::STATUS_GENERATED => 'Yaratilgan',
@@ -137,30 +138,33 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 <?php
 $script = <<< JS
-$('#delivered').on('click', function() {
-  let selected = [];
-            $('input:checkbox[class="form-check-input"]:checked').map((i, val) => {
-                selected.push(val.dataset.indigent)
-            });
-            if (selected.length > 0) {
-                $.ajax({
-                    url: '/delivery/delivered',
-                    type: 'post',
-                    data: {
-                        ids: selected
-                    },
-                    success: function(res) {
-                      if (res.success) {
-                          toastr.success(res.message);
-                          window.location.reload();
-                      } else {
-                          toastr.error(res.message);
-                      }
-                    }
-                })
-            } else {
-                toastr.error('Arizachi(lar) tanlanmagan');
-            }
+$("#generate_invoice").on('click', function() {
+    let selected = [];
+    $('input:checkbox[class="form-check-input"]:checked').map((i, val) => {
+        selected.push(val.dataset.indigent);
+    });
+  if (selected.length > 0) {
+      $.ajax({
+        url: '/invoice/application',
+        type: 'post',
+        data: {ids: selected},
+        success: function(res) {
+          if (res.success) {
+              toastr.success(res.message);
+              setTimeout(function() {
+                window.location.reload();
+              }, 2000);
+          } else {
+              toastr.error(res.message);
+          }
+        },
+        error: function(err) {
+          console.log(err);
+        }
+      });
+  } else {
+      toastr.error('Arizachi(lar) tanlanmagan!')
+  }
 })
 JS;
 

@@ -15,7 +15,8 @@ class m200419_113219_create_support_table extends Migration
         $this->createTable('{{%support}}', [
             'id' => $this->primaryKey(),
             'indigent_id' => $this->integer()->notNull(),
-            'date' => $this->date()
+            'date' => $this->date(),
+            'app_status' => "ENUM('0', '1') DEFAULT '0'"
         ]);
 
         $this->createIndex(
@@ -32,31 +33,6 @@ class m200419_113219_create_support_table extends Migration
             'id',
             'CASCADE'
         );
-
-        $this->insert('support', [
-            'indigent_id' => 1,
-            'date' => date('Y-m-d', strtotime('2020-04-25'))
-        ]);
-
-        $this->insert('support', [
-            'indigent_id' => 2,
-            'date' => date('Y-m-d', strtotime('2020-05-01'))
-        ]);
-
-        $this->insert('support', [
-            'indigent_id' => 3,
-            'date' => date('Y-m-d', strtotime('2020-05-13'))
-        ]);
-
-        $this->insert('support', [
-            'indigent_id' => 1,
-            'date' => date('Y-m-d', strtotime('2020-05-05'))
-        ]);
-
-        $this->insert('support', [
-            'indigent_id' => 2,
-            'date' => date('Y-m-d', strtotime('2020-06-01'))
-        ]);
     }
 
     /**
@@ -64,11 +40,6 @@ class m200419_113219_create_support_table extends Migration
      */
     public function safeDown()
     {
-        $this->delete('support', ['id' => 1]);
-        $this->delete('support', ['id' => 2]);
-        $this->delete('support', ['id' => 3]);
-        $this->delete('support', ['id' => 4]);
-        $this->delete('support', ['id' => 5]);
 
         $this->dropForeignKey(
             'fk-support-indigent_id',

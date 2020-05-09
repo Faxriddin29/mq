@@ -35,7 +35,7 @@ class m200419_112103_create_indigent_table extends Migration
             'support_type' => 'once',
             'support_regularity_type' => 'week_days',
             'support_days' => '1',
-            'status' => '1'
+            'status' => '0'
         ]);
 
         $this->insert('indigent', [
@@ -59,6 +59,17 @@ class m200419_112103_create_indigent_table extends Migration
             'support_type' => 'regular',
             'support_regularity_type' => 'dates_of_the_month',
             'support_days' => '1,5,6'
+        ]);
+
+        $this->insert('indigent', [
+            'first_name' => 'Salomov',
+            'middle_name' => 'Salom',
+            'last_name' => 'Salom o`g`li',
+            'phone' => '998936594587',
+            'address' => 'Toshkent, Yashnobod',
+            'support_type' => 'regular',
+            'support_regularity_type' => 'dates_of_the_month',
+            'support_days' => '1,3,5,6'
         ]);
     }
 

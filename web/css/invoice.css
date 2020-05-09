@@ -1,0 +1,139 @@
+.mq-invoice {
+    padding-bottom: 30px;
+    padding-top:30px;
+    border-bottom: 1px dashed;
+}
+.mq-invoice:first-child {
+    padding-top: 0;
+}
+.mq-invoice:last-child {
+    border-bottom: none;
+}
+.mq-title {
+    text-align: center;
+    margin-bottom: 45px;
+}
+.mq-date {
+    width: 100%;
+    height: 20px;
+    margin: 0;
+    position: relative;
+}
+.mq-date u {
+    width: 150px;
+    height: 20px;
+    display: block;
+    float: right;
+    position: absolute;
+    right: 0;
+    padding-bottom: 9px;
+    bottom: 0;
+    font-size: 16px;
+}
+.mq-top-description {
+    text-indent: 50px;
+    font-size: 16px;
+}
+.mq-top-description span {
+    text-transform: uppercase;
+}
+.mq-row .mq-label {
+    font-size: 16px;
+    margin-bottom: 10px;
+    display: inline;
+    float: left;
+}
+
+.mq-row {
+    border-bottom: 1px solid #444;
+    margin-bottom: 25px;
+    overflow: hidden;
+    text-align: center;
+    font-size: 18px;
+}
+.mq-description {
+    width: 60%;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 16px;
+}
+.mq-description span {
+    display: block;
+}
+.mq-table {
+    width: 100%;
+    margin: 30px auto;
+}
+.mq-table, .mq-table th, .mq-table td {
+    border: 1px solid #444;
+}
+
+.mq-table th, .mq-table td {
+    text-align: center;
+    font-weight: normal;
+    font-size: 16px;
+    padding-top: 7px;
+}
+.mq-table .number {
+    width: 5%;
+}
+
+.mq-table .name {
+    width: 35%;
+}
+
+.mq-table .measure,
+.mq-table .weight,
+.mq-table .extra
+{
+    width: 15%;
+}
+
+.mq-footer {
+    overflow: hidden;
+}
+.mq-footer-left {
+    width: 50%;
+    float: left;
+}
+.mq-footer-right {
+    width: 50%;
+    float: right;
+}
+.mq-footer-left p u {
+    width: 150px;
+    display: inline-block;
+    height: 5px;
+    border-bottom: 1px solid #444;
+    margin-right: 5px;
+    margin-left: 50px;
+}
+.mq-footer-left > span {
+    margin-bottom: 10px;
+    display: block;
+}
+.mq-footer-left p:last-child {
+    width: 225px;
+    height: 1px;
+    background-color: #444;
+    margin-left: 50px;
+    margin-top: 35px;
+}
+
+.mq-footer-right p {
+    margin-left: 50px;
+}
+.mq-footer-right span {
+    display: inline-block;
+    width: 250px;
+    height: 1px;
+    background-color: #444;
+}
+table {
+    border:solid #000 !important;
+    border-width:1px 0 0 1px !important;
+}
+th, td {
+    border:solid #000 !important;
+    border-width:0 1px 1px 0 !important;
+}

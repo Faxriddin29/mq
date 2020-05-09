@@ -18,7 +18,7 @@ class ApplicantSearch extends Indigent
     {
         return [
             [['id'], 'integer'],
-            [['first_name', 'middle_name', 'last_name', 'phone', 'address', 'support_type', 'support_regularity_type', 'support_days', 'status'], 'safe'],
+            [['first_name', 'middle_name', 'last_name', 'phone', 'address', 'support_type', 'support_regularity_type', 'support_days', 'status', 'date'], 'safe'],
         ];
     }
 

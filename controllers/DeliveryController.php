@@ -4,8 +4,11 @@ namespace app\controllers;
 
 use app\models\ApplicantSearch;
 use app\models\Indigent;
+use app\models\Support;
+use app\models\SupportingsSearch;
 use Yii;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 class DeliveryController extends \yii\web\Controller
 {
@@ -15,12 +18,12 @@ class DeliveryController extends \yii\web\Controller
      */
     public function actionIndex()
     {
-        $searchModel = new ApplicantSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchModel = new SupportingsSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, Indigent::ON_PROCESS);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'dataProvider' => $dataProvider
         ]);
     }
 
@@ -58,5 +61,49 @@ class DeliveryController extends \yii\web\Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    public function actionDelivered()
+    {
+        if (Yii::$app->request->isAjax) {
+            $request = Yii::$app->request->post('ids');
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if (count($request) > 0) {
+                $model = Indigent::find()->where(['in', 'id', $request])->all();
+                if (count($model) > 0) {
+                    $connection = Yii::$app->db;
+                    $transaction = $connection->beginTransaction();
+                    try {
+                        foreach ($model as $item) {
+                            $item->status = Indigent::DELIVERED;
+                            $item->save();
+                        }
+
+                        $transaction->commit();
+                        return [
+                            'success' => true,
+                            'message' => 'Done',
+                            'data' => $model
+                        ];
+                    } catch (\Exception $exception) {
+                        $transaction->rollBack();
+                        return [
+                            'success' => false,
+                            'message' => $exception->getMessage()
+                        ];
+                    }
+                }
+                return [
+                    'success' => false,
+                    'message' => 'Arizachi(lar) topilmadi!'
+                ];
+            }
+            return [
+                'success' => false,
+                'message' => 'Error',
+                'data' => $request
+            ];
+        }
+        return 'Request is not Ajax';
     }
 }

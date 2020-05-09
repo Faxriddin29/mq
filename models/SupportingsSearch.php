@@ -16,7 +16,7 @@ class SupportingsSearch extends Supportings
     {
         return [
             [['id', 'support_id'], 'integer'],
-            [['first_name', 'middle_name', 'last_name', 'phone', 'address', 'support_type', 'support_regularity_type', 'status', 'date', 'created_at', 'support_days'], 'safe']
+            [['first_name', 'middle_name', 'last_name', 'phone', 'address', 'support_type', 'support_regularity_type', 'status', 'date', 'created_at', 'support_days', 'app_status'], 'safe']
         ];
     }
 
@@ -34,11 +34,12 @@ class SupportingsSearch extends Supportings
      *
      * @param array $params
      *
+     * @param null $invoiceSearch
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $invoiceSearch = null)
     {
-        $query = Supportings::find();
+        $query = $invoiceSearch ? Supportings::find()->where(['=', 'status', $invoiceSearch]) : Supportings::find();
 
         // add conditions that should always apply here
 
@@ -69,6 +70,7 @@ class SupportingsSearch extends Supportings
             ->andFilterWhere(['like', 'support_type', $this->support_type])
             ->andFilterWhere(['like', 'support_regularity_type', $this->support_regularity_type])
             ->andFilterWhere(['like', 'status', $this->status])
+            ->andFilterWhere(['like', 'app_status', $this->app_status])
             ->andFilterWhere(['like', 'address', $this->address]);
 
         return $dataProvider;
