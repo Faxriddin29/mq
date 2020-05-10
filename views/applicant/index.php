@@ -21,7 +21,7 @@ $status = [
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <div class="row">
+    <div class="row mb-20">
         <div class="col-md-2">
                 <?= Html::a(Yii::t('app', 'Yangi qo`shish'), ['create'], ['class' => 'btn btn-success']) ?>
         </div>

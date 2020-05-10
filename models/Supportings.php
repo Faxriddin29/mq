@@ -42,7 +42,7 @@ class Supportings extends \yii\db\ActiveRecord
             [['support_type', 'support_regularity_type', 'status', 'app_status'], 'string'],
             [['date', 'created_at'], 'safe'],
             [['first_name', 'middle_name', 'last_name'], 'string', 'max' => 50],
-            [['phone'], 'string', 'max' => 12],
+            [['phone'], 'string', 'max' => 13],
             [['address', 'support_days'], 'string', 'max' => 255],
         ];
     }
